@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>::: ctrldoce-Gestor de documentos electr&oacute;nicos :::</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="css/login.css">
+    </head>
+    <body>
+        <section id="wrap_prin">
+            <div id="wra_login" style="overflow: hidden;">
+                <div id="login">
+                    <!--<img src="theme/9824/img/logo.png"/>-->
+
+                    <h1 style="margin-top:60px">Bienvenid@</h1>
+                    <h2>Sistema generador <br>de documentos notariales</h2>
+
+                    <div class="loginForm  grad_gray">
+                        <div class="login_avatar">
+                            <img src="img/logo.png" style="width: 200px">
+
+                        </div>
+                        
+                        <form name="myForm" id="myForm">
+                            <div class="login_form" id="frm_login" >
+                                <div class="campoLogin" >
+                                    <label class="labelLogin"><b>Usuario</b></label>
+                                    <input type="text" name="usuario" id="usuario" placeholder="Nombre del usuario" maxlength="16" required />
+                                    
+                                </div>
+                                <div class="campoLogin">  
+                                    <label class="labelLogin"><b>Contrase&ntilde;a</b></label>
+                                    <input type="password" name="password" id="password" placeholder="************" maxlength="32" required/>
+                                    
+                                </div>
+
+                                <div class="campoLogin">
+                                    <button class="btn-blue"  type="submit">Acceder</button>                                   
+                                    <p>
+                                        <a href="#" onclick="switchElemento('#frm_login', '#frm_remember')">&iquest;Olvidaste tu contrase&ntilde;a?</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="login_form" id="frm_remember" >
+                            <div class="campoLogin">
+                                <label class="labelLogin">
+                                    <b>Correo electr&oacute;nico</b></label>
+                                <input type="text" placeholder="Escribe t&uacute; correo o usuario" ng-model="restaurapass.dscorreo" maxlength="40" />
+                            </div>
+                            <br>
+
+                            <div class="campoLogin">
+                                <button class="btn-blue" ng-click="recuperaPass()">Recuperar contrase&ntilde;a</button>                                   
+                                <div class="btn-rounded" style="width: 99%;" onclick="switchElemento('#frm_remember', '#frm_login');"><p>Regresar</p></div>                                   
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="campoLogin">
+                        <p>
+                            <!--<a href="#">&iquest;Necesitas ayuda?</a>-->
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </section>
+
+        <footer>
+            <div id="wrap_footer">
+
+                <div class="colums2">
+                    <p>
+                        <b>Farias Telecomunicaciones y C&oacute;mputo &reg; Derechos reservados</b>  
+                    </p>
+                    <p>
+                        Mariano Escobedo 123, Col. Anahuac, Del. Miguel Hidalgo, C.P.11320
+                    </p>
+                </div>
+                <div class="colums2">
+                    <p>
+                        Ing. Carlos Alberto Farias Ayala
+                    <p>
+                    <p>
+                        Lic. Oscar Gabriel Farias Ayala
+                    </p>
+                </div>
+
+            </div>
+        </footer>
+    </body>
+</html>

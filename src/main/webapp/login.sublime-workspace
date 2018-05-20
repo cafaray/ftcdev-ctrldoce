@@ -1,0 +1,1626 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"console",
+				"console.info"
+			],
+			[
+				"setT",
+				"setTimeout(function, milliseconds);"
+			],
+			[
+				"tex",
+				"text-align"
+			],
+			[
+				"lis",
+				"list	list-style-type"
+			],
+			[
+				"style",
+				"style	Attr"
+			],
+			[
+				"styl",
+				"style	<style>"
+			],
+			[
+				"line",
+				"line-height"
+			],
+			[
+				"margin",
+				"margin-right"
+			],
+			[
+				"trans",
+				"transition"
+			],
+			[
+				"border",
+				"border-right"
+			],
+			[
+				"bor",
+				"border"
+			],
+			[
+				"min-",
+				"min-width"
+			],
+			[
+				"WI",
+				"width"
+			],
+			[
+				"le",
+				"left"
+			],
+			[
+				"marg",
+				"margin-left"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"inli",
+				"inline-block"
+			],
+			[
+				"list",
+				"list-style"
+			],
+			[
+				"ba",
+				"background"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"__",
+				"__name__	class"
+			],
+			[
+				"N",
+				"NULL"
+			],
+			[
+				"In",
+				"INT"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/yomero/public_html/metro/itecsa/public_html/red.html",
+			"settings":
+			{
+				"buffer_size": 4766,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "/* \n/* Archivo para manejo y trazado del mapa dentro \n/* del sistema para las pantallas interactivas\n/* METRO\n\n/* \n* @Author: yomero:Víctor Espinosa y Mario Perez\n* @Date:   2014-09-09 15:35:41\n* @Last Modified by:   yomero\n* @Last Modified time: 2014-09-10 16:03:15\n*/\n\nfunction Metro(){\n    console.info(\"CREO OBJETO METRO\");\n    this.utiles={};\n    // DEFINICIÓN DE CONFIGURACIÓN GLOBAL DE LA API\n    // DEFINICION DE ESTILOS PARA EL TRAZADO DE RUTAS Y LINEAS\n    var estilos={\n        linea:{\n            strokeWidth: 9,\n            strokeCap: 'round',\n            strokeJoin: 'bevel'\n                },\n        estacion:{\n            radius: 3.7,\n            fillColor: 'white',\n            //strokeColor: 'black',\n            strokeWidth: 3},\n        transbordo:{\n            radius: 7,\n            fillColor: 'white',\n            strokeColor: 'black',\n            strokeWidth: 3.7}\n        }\n\n\n    // DEFINICION DE FUNCIONES NO VISIBLES PARA EL RESTO DE OBJETOS\n    var Estacion = function(){\n        console.info(\"creo estacion\",estilos);\n        var estilo = estilos.estacion;\n        \n        var pintaestacion = function(x, y) {\n            var estacion = new Shape.Circle(estilo);\n                estacion.position = new Point(x, y);\n                estacion.bringToFront();\n                estacion.onClick = function(event) {\n                    alert(\"todo ok\");\n                };\n\n            console.info(\"MI ESTACION ES:\",estacion);\n            };\n\n    \n        this.crear = function(x, y, tipo) {\n            console.info(\"TIPO\",tipo);\n            switch (tipo) {\n                case \"e\":\n                case \"re\":\n                    estilo = estilos.estacion\n                    break;\n                case \"t\":\n                    estilo = estilos.transbordo;\n                    break;\n                case \"rt\":\n                    estilo = estilos.transbordo;\n                    estilo.fillColor=\"green\";\n                    break;\n                default:\n                    return\n                    break;\n            }\n            pintaestacion(x, y);\n        };\n    }\n\n    //// TEST ESTACIÓN \n    /*var e = new Estacion();\n    console.info(\"E\",e);\n    e.crear(100,100,\"t\");\n    */\n   \n   \n   \n}\n\nvar metro = new Metro();\n",
+			"file": "/home/yomero/public_html/metro/itecsa/public_html/js/mapa/mapa.js",
+			"file_size": 2261,
+			"file_write_time": 130548565957553493,
+			"settings":
+			{
+				"buffer_size": 2257,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "/* \n/* Archivo para manejo y trazado del mapa dentro \n/* del sistema para las pantallas interactivas\n/* METRO\n\n/* \n* @Author: yomero:Víctor Espinosa y Mario Perez\n* @Date:   2014-09-09 15:35:41\n* @Last Modified by:   yomero\n* @Last Modified time: 2014-09-09 15:46:42\n*/\n\nfunction Metro(){\n    this.utiles={};\n    // DEFINICION DE FUNCIONES NO VISIBLES PARA EL RESTO DE OBJETOS\n    function Estacion(){\n        var estilo= style_estacion;\n        this.pintaestacion = function(x, y) {\n            var estacion = new Shape.Circle(estilo);\n                estacion.position = new Point(x, y);\n            estacion.bringToFront();\n                estacion.onClick = function(event) {\n                    alert(\"todo ok\");\n                };};\n\n    \n        this.crear = function(x, y, tipo) {\n            console.info(\"TIPO\",tipo);\n            switch (tipo) {\n                case \"e\":\n                case \"re\":\n                    estilo = style_estacion\n                    break;\n                case \"t\":\n                    estilo = style_transbordo;\n                    break;\n                case \"rt\":\n                    estilo = style_transbordo;\n                    estilo.fillColor=\"green\";\n                    break;\n                default:\n                    return\n                    break;\n            }\n            this.pintaestacion(x, y);\n        };}\n\n    function despliegaInfo(info){\n        alert(info);\n    };\n\n    function obtiene_puntos(ini_point,fin_point,total_segmentos){        \n        var segmento = (fin_point-ini_point) / total_segmentos;\n        console.info(segmento);\n        var segmentos=[];\n        for(var i = 0; i<total_segmentos;i++)\n        {\n            ini_point += segmento\n            segmentos.push(ini_point.round());\n            console.info(\"COUNT[\"+i+\"]\",segmentos[i])\n        }\n        return segmentos\n    }\n\n    // DEFINICION DE ESTILOS PARA EL TRAZADO DE RUTAS Y LINEAS\n    this.estilos:{\n        linea:{\n            strokeWidth: 9,\n            strokeCap: 'round',\n            strokeJoin: 'bevel'\n                },\n        estacion:{\n            radius: 3.7,\n            fillColor: 'white',\n            //strokeColor: 'black',\n            strokeWidth: 3},\n        transbordo:{\n            radius: 7,\n            fillColor: 'white',\n            strokeColor: 'black',\n            strokeWidth: 3.7}}\n\n    this.utiles.trazaruta:function(color,ruta){\n\n        var nodpos = 0;\n        var nodo=ruta[nodpos];\n        var listenTrazado = setInterval(function(){\n            if(typeof nodo ==\"undefined\"){\n                clearInterval(listenTrazado);\n                setTimeout(function(){\n                   // destruyeOverflow()\n                },2000);\n                return;\n            }\n\n            if(trazandoRuta != true && typeof nodo !=\"undefined\"){\n                trazandoRuta = true;\n                nodo = ruta[nodpos];\n                //console.info(\"NODO\",nodo)\n                // PINTO ESTACIONES EN EL TRAZADO DE LA RUTA\n                if(nodpos>0) \n            {\n\n                var nodopintar = ruta[nodpos-1]; \n                console.info(\"******NODO PINTAR********\",nodopintar);\n                setTimeout(function(){\n                    new Estacion().crear(nodopintar[1][0],nodopintar[1][1],\"r\"+nodopintar[1][2]);\n                }, 50);\n\n            }\n\n                uneNodo(nodo,color,function(){\n                        trazandoRuta = false; \n                    });  \n                    \n\n\n\n                nodpos++;\n\n            }\n            \n        },100); }\n\n    this.utiles.unenodo:function(nodo,color,callback) {\n        if(typeof nodo == \"undefined\"){\n            return;\n        }\n      \n        console.info(\"UNE MI NODO\",nodo);\n        var inicioX = nodo[0][0], inicioY = nodo[0][1]; \n        var limiteX = nodo[1][0], limiteY = nodo[1][1];\n        var milinea = new Path(style_Linea);\n        milinea.strokeColor = color;\n        milinea.strokeCap = 'round';\n        \n        var point_ini,point_fin,cantidad;\n\n        point_ini = new Point(inicioX,inicioY);\n        point_fin = new Point(limiteX,limiteY);\n        cantidad = 10;\n\n        seg_data = (point_ini + point_fin) / cantidad;\n        console.info(\"MI PUNTO INICIAL\",point_ini);\n        console.info(\"MI PUNTO FINAL\",point_fin);\n        console.info(\"SEGMENTO\",seg_data);\n        \n        milinea.add(point_ini);\n\n        setTimeout(function(){\n             milinea.add(point_ini+seg_data);\n             console.info(\"MI PUNTO 1\",point_ini+seg_data);\n\n             setTimeout(function(){\n                    milinea.add(point_ini+seg_data);\n                    console.info(\"MI PUNTO 2\",point_ini+seg_data);\n             }, 3000);\n\n        },1000);\n\n        console.info()\n\n        var x = inicioX;\n        var y = inicioY;\n\n        var derecha = false;\n        var arriba = false;\n\n        var apagaX = false;\n        var apagaY = false;\n        \n\n        \n        \n\n        /*milinea.onFrame = function(event) {\n            console.log(\"count::\",event.count);\n            // The total amount of time passed since\n            // the first frame event in seconds:\n            console.log(\"time::\",event.time);\n\n            if(point_ini < point_fin){\n                point_ini += 1;\n                milinea.add(point_ini);\n                milinea.selected = true;\n                console.info(\"MI PUNTO\",point_ini);\n                console.info(\"REFERENCIA\",point_fin);\n\n            }else{\n                this.onFrame = null;\n            }\n\n            apagaY = true;\n            /*if (x < limiteX) {\n                derecha = true;\n              //  console.info(\"++X:: DERECHA\");\n            }\n            else {\n                derecha = false;\n                //console.info(\"--X:: IZQUIERDA\");\n                //this.onFrame=null;\n            }\n\n            if (y < limiteY) {\n                arriba = false;\n                //console.info(\"--Y:: abajo\");\n            } else {\n                arriba = true;\n                //console.info(\"++Y:: Arriba\");\n\n            }\n\n            if (derecha) {\n                if (x < limiteX) {\n                    x += 1;\n                } else {\n                    apagaX = true;\n                }\n            }\n            else {\n                if (x > limiteX) {\n                    x -= 1;\n                } else {\n                    apagaX = true;\n                }\n            }\n\n            if (arriba) {\n                if (y > limiteY) {\n                    y -= 1;\n                } else {\n                    apagaY = true;\n                }\n            }\n            else {\n                if (y < limiteY) {\n                    y += 1;\n                } else {\n                    apagaY = true;\n                }\n            }\n\n\n            if (apagaX && apagaY) {\n                if (typeof callback != \"undefined\")\n                    callback()\n                \n                //console.info(\"PINTANDO RUTA...\",pintandoRuta);\n                this.onFrame = null;\n            } else {\n                milinea.add(new Point(x, y));\n                milinea.selected = true;\n            }\n        };*/\n\n        setTimeout(function(){\n            milinea.onFrame = null;\n            console.info(\"SETEO A NULL\")\n        }, 1035);}\n\n\n        /**\n     * \n     * @param {type} x PUNTO DE INICIO X\n     * @param {type} y PUNTO DE INICIO Y\n     * @param {type} tipo \"e\" si es estacion o \"t\" si es transbordo \n     * @param {type} color Color en hexadecimal o nombre para asignarselo a la linea\n     * @returns {lineaMetro}*/\n\n    this.utiles.lineaMetro:function lineaMetro(x, y, tipo, color) {\n        //layer_mapa.activate();\n        var milinea = this;\n        this.linea = new Path(style_Linea);\n        this.linea.strokeColor = color;\n        this.linea.add([x, y]);\n\n        // ENVIA UNA E EN TIPO SI ES UNA \"e\" O una \"t\" SI ES UN TRANSBORDO\n\n\n        /*this.creaEstacionNormal = function(x, y) {\n            var estacion = new Shape.Circle(style_estacion);\n            estacion.position = new Point(x, y);\n            estacion.onClick = function(event) {\n                alert(\"todo ok\");\n            };\n        };\n\n        this.creaTransbordo = function(x, y) {\n            var transbordo = new Shape.Circle(style_transbordo);\n            transbordo.position = new Point(x, y);\n            transbordo.onClick = function(event) {\n                alert(\"todo ok\");\n            };\n        };\n\n        this.creaEstacion = function(x, y, tipo) {\n\n            switch (tipo) {\n                case \"e\":\n                    this.creaEstacionNormal(x, y);\n                    break;\n                case \"t\":\n                    this.creaTransbordo(x, y);\n                    break;\n                default:\n                    break;\n            }\n\n        };*/\n\n\n        this.addPoint = function(x, y, tipo) {\n            this.linea.add([x, y]);\n            // DEFINO SI ES UNA ESTACION O UN TRANSBORDO\n            new Estacion().crear(x, y, tipo);\n        };\n\n        this.dibujaLinea = function(paths) {\n            //layer_mapa.activate();\n            _.each(paths, function(conexion) {\n                _.each(conexion, function(path) {\n                    milinea.addPoint(path[0], path[1], path[2]);\n                });\n            });\n        };\n\n        new Estacion().crear(x, y, tipo);}\n\n}\n\n\n////*******  UTILIZACIÓN DE LA LIBRERIA *********////\n\nvar lineaPrueba = new lineaMetro(101,728,\"\",'rgb(231, 98, 148)');\nlineaPrueba.dibujaLinea(linea1);\nvar lineaPrueba2 = new lineaMetro(33,418,\"\",'rgb(0, 100, 168)');\nlineaPrueba2.dibujaLinea(linea2);\nvar lineaPrueba3 = new lineaMetro(516,238,\"\",'rgb(174, 157, 39)');\nlineaPrueba3.dibujaLinea(linea3);\nvar lineaPrueba4 = new lineaMetro(585,281,\"\",'rgb(111, 183, 174)');\nlineaPrueba4.dibujaLinea(linea4);\nvar lineaPrueba5 = new lineaMetro(365,209,\"\",'rgb(253, 223, 0)');\nlineaPrueba5.dibujaLinea(linea5);\nvar lineaPrueba6 = new lineaMetro(125,195,\"\",'rgb(255, 17, 0)');\nlineaPrueba6.dibujaLinea(linea6);\nvar lineaPrueba7 = new lineaMetro(144,203,\"\",'rgb(227, 104, 36)');\nlineaPrueba7.dibujaLinea(linea7);\nvar lineaPrueba8 = new lineaMetro(418,485,\"\",'rgb(0, 156, 106)');\nlineaPrueba8.dibujaLinea(linea8);\nvar lineaPrueba9 = new lineaMetro(181,709,\"t\",'rgb(91, 44, 42)');\nlineaPrueba9.dibujaLinea(linea9);\nvar lineaPrueba12 = new lineaMetro(165,837,\"\",'rgb(185, 158, 81)');\nlineaPrueba12.dibujaLinea(linea12);\nvar lineaPruebaA = new lineaMetro(740,648,\"t\",'rgb(163, 39, 124)');\nlineaPruebaA.dibujaLinea(lineaA);\nvar lineaPruebaB = new lineaMetro(336,486,\"\",'rgb(169, 169, 169)');\nlineaPruebaB.dibujaLinea(lineaB);\n\n\n\n\n\n///****/////\n///\n///\n///////// Ruta 1 Revolucion ---  Zaragoza\n    var linea1Ruta = [\n   [[740,648,\"t\"],[750,697,\"e\"]], //Pantitlan - Agricola Oriental\n    //[[379,535,\"t\"],[410,540,\"t\"]],  \n    /*[[410,540,\"t\"],[434,545,\"e\"]],    \n    [[434,545,\"e\"],[450,548,\"\"]],\n    [[450,548,\"\"],[449,559,\"e\"]],\n    [[449,559,\"e\"],[444,592,\"t\"]],\n    [[444,592,\"t\"],[482,589,\"e\"]],     \n    [[482,589,\"e\"],[512,584,\"t\"]],      \n    [[512,584,\"t\"],[537,573,\"t\"]],         \n    [[537,573,\"t\"],[564,589,\"e\"]],       \n    [[564,589,\"e\"],[598,608,\"e\"]],   \n    [[598,608,\"e\"],[626,624,\"e\"]],     \n    [[626,624,\"e\"],[657,642,\"e\"]],    \n    [[657,642,\"e\"],[696,664,\"e\"]]*/\n    ];\n\nvar nodo = new rutaMetro(\"skyblue\");\nnodo.trazaRuta(linea1Ruta);\n/*\n//// GENERA PUNTOS\n///\n\n    mipath = new Path(style_Linea);\n    mipath.strokeColor = \"black\";\n    mipath.add(new Point(0,0));\n    //mipath.add(new Point(100,100));\n\n    \n\n    \n\n    var ini_point = new Point(0,0);\n    var fin_point = new Point(100,100);\n    var total_segmentos = 60;\n    var s = obtiene_puntos(ini_point,fin_point,total_segmentos);\n    console.info(s);\n*/",
+			"settings":
+			{
+				"buffer_size": 11684,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "{\n   \"titulo\":\"Qu&eacute; hacer en caso de sismo\",\n   \"descripcion\":\"En esta secci&oacute;n encontrar&aacute;s los pasos a seguir en caso de que un sismo ocurra mientras te encuentras en nuestras instalaciones.\"   ,\"lista_informacion\":[\n      {\n         \"titulo\":\"Conserva la calma\",\n         \"descripcion\":\"Conserva la calma y trata de ayudar a los que estan cerca de t&iacute;.\",\n         \"icono\":\"http://midominio.com/encasode/sismo/2.jpg\"\n      },\n      {\n         \"titulo\":\"Alejate de cosas que se puedan romper\",\n         \"descripcion\":\"Alejate de ventas y objetos que se puedan caer\",\n         \"icono\":\"http://midominio.com/encasode/sismo/3.jpg\"\n      }\n   ]\n}\n\nsub-form0\nsub-form0",
+			"settings":
+			{
+				"buffer_size": 688,
+				"line_ending": "Unix",
+				"name": "{"
+			}
+		},
+		{
+			"file": "/home/yomero/public_html/palestra/Vistas/goodoc/css/style_adm.less",
+			"settings":
+			{
+				"buffer_size": 3115,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/home/yomero/public_html/palestra/Vistas/goodoc/css/style_adm.css",
+			"settings":
+			{
+				"buffer_size": 37403,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "    this.utiles.trazaruta:function(color,ruta){\n\n        var nodpos = 0;\n        var nodo=ruta[nodpos];\n        var listenTrazado = setInterval(function(){\n            if(typeof nodo ==\"undefined\"){\n                clearInterval(listenTrazado);\n                setTimeout(function(){\n                   // destruyeOverflow()\n                },2000);\n                return;\n            }\n\n            if(trazandoRuta != true && typeof nodo !=\"undefined\"){\n                trazandoRuta = true;\n                nodo = ruta[nodpos];\n                //console.info(\"NODO\",nodo)\n                // PINTO ESTACIONES EN EL TRAZADO DE LA RUTA\n                if(nodpos>0) \n            {\n\n                var nodopintar = ruta[nodpos-1]; \n                console.info(\"******NODO PINTAR********\",nodopintar);\n                setTimeout(function(){\n                    new Estacion().crear(nodopintar[1][0],nodopintar[1][1],\"r\"+nodopintar[1][2]);\n                }, 50);\n\n            }\n\n                uneNodo(nodo,color,function(){\n                        trazandoRuta = false; \n                    });  \n                    \n\n\n\n                nodpos++;\n\n            }\n            \n        },100); }\n\n    this.utiles.unenodo:function(nodo,color,callback) {\n        if(typeof nodo == \"undefined\"){\n            return;\n        }\n      \n        console.info(\"UNE MI NODO\",nodo);\n        var inicioX = nodo[0][0], inicioY = nodo[0][1]; \n        var limiteX = nodo[1][0], limiteY = nodo[1][1];\n        var milinea = new Path(style_Linea);\n        milinea.strokeColor = color;\n        milinea.strokeCap = 'round';\n        \n        var point_ini,point_fin,cantidad;\n\n        point_ini = new Point(inicioX,inicioY);\n        point_fin = new Point(limiteX,limiteY);\n        cantidad = 10;\n\n        seg_data = (point_ini + point_fin) / cantidad;\n        console.info(\"MI PUNTO INICIAL\",point_ini);\n        console.info(\"MI PUNTO FINAL\",point_fin);\n        console.info(\"SEGMENTO\",seg_data);\n        \n        milinea.add(point_ini);\n\n        setTimeout(function(){\n             milinea.add(point_ini+seg_data);\n             console.info(\"MI PUNTO 1\",point_ini+seg_data);\n\n             setTimeout(function(){\n                    milinea.add(point_ini+seg_data);\n                    console.info(\"MI PUNTO 2\",point_ini+seg_data);\n             }, 3000);\n\n        },1000);\n\n        console.info()\n\n        var x = inicioX;\n        var y = inicioY;\n\n        var derecha = false;\n        var arriba = false;\n\n        var apagaX = false;\n        var apagaY = false;\n        \n\n        \n        \n\n        /*milinea.onFrame = function(event) {\n            console.log(\"count::\",event.count);\n            // The total amount of time passed since\n            // the first frame event in seconds:\n            console.log(\"time::\",event.time);\n\n            if(point_ini < point_fin){\n                point_ini += 1;\n                milinea.add(point_ini);\n                milinea.selected = true;\n                console.info(\"MI PUNTO\",point_ini);\n                console.info(\"REFERENCIA\",point_fin);\n\n            }else{\n                this.onFrame = null;\n            }\n\n            apagaY = true;\n            /*if (x < limiteX) {\n                derecha = true;\n              //  console.info(\"++X:: DERECHA\");\n            }\n            else {\n                derecha = false;\n                //console.info(\"--X:: IZQUIERDA\");\n                //this.onFrame=null;\n            }\n\n            if (y < limiteY) {\n                arriba = false;\n                //console.info(\"--Y:: abajo\");\n            } else {\n                arriba = true;\n                //console.info(\"++Y:: Arriba\");\n\n            }\n\n            if (derecha) {\n                if (x < limiteX) {\n                    x += 1;\n                } else {\n                    apagaX = true;\n                }\n            }\n            else {\n                if (x > limiteX) {\n                    x -= 1;\n                } else {\n                    apagaX = true;\n                }\n            }\n\n            if (arriba) {\n                if (y > limiteY) {\n                    y -= 1;\n                } else {\n                    apagaY = true;\n                }\n            }\n            else {\n                if (y < limiteY) {\n                    y += 1;\n                } else {\n                    apagaY = true;\n                }\n            }\n\n\n            if (apagaX && apagaY) {\n                if (typeof callback != \"undefined\")\n                    callback()\n                \n                //console.info(\"PINTANDO RUTA...\",pintandoRuta);\n                this.onFrame = null;\n            } else {\n                milinea.add(new Point(x, y));\n                milinea.selected = true;\n            }\n        };*/\n\n        setTimeout(function(){\n            milinea.onFrame = null;\n            console.info(\"SETEO A NULL\")\n        }, 1035);}\n\n\n        /**\n     * \n     * @param {type} x PUNTO DE INICIO X\n     * @param {type} y PUNTO DE INICIO Y\n     * @param {type} tipo \"e\" si es estacion o \"t\" si es transbordo \n     * @param {type} color Color en hexadecimal o nombre para asignarselo a la linea\n     * @returns {lineaMetro}*/\n\n    this.utiles.lineaMetro = function(x, y, tipo, color){\n\n        var milinea = this;\n        this.linea = new Path(style_Linea);\n        this.linea.strokeColor = color;\n        this.linea.add([x, y]);\n\n        // ENVIA UNA E EN TIPO SI ES UNA \"e\" O una \"t\" SI ES UN TRANSBORDO\n\n        this.addPoint = function(x, y, tipo) {\n            this.linea.add([x, y]);\n            // DEFINO SI ES UNA ESTACION O UN TRANSBORDO\n            new Estacion().crear(x, y, tipo);\n        };\n\n        this.dibujaLinea = function(paths) {\n            _.each(paths, function(conexion) {\n                _.each(conexion, function(path) {\n                    milinea.addPoint(path[0], path[1], path[2]);\n                });\n            });\n        };\n\n        new Estacion().crear(x, y, tipo);\n    }\n",
+			"file": "/home/yomero/public_html/metro/itecsa/public_html/TEMPORAL/utiles.objetoMetro",
+			"file_size": 6953,
+			"file_write_time": 130548523630129926,
+			"settings":
+			{
+				"buffer_size": 5964,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/yomero/public_html/metro/itecsa/public_html/js/resources/lineas.js",
+			"settings":
+			{
+				"buffer_size": 15038,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/yomero/public_html/metro/itecsa/public_html/js/resources/rutas.js",
+			"settings":
+			{
+				"buffer_size": 2518,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"command_palette":
+	{
+		"height": 71.0,
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"file",
+				"File: New View into File"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"INSTALL",
+				"Package Control: Install Package"
+			],
+			[
+				"lorem",
+				"LoremIpsum: (200) stick shake"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"intall",
+				"Package Control: Install Package"
+			],
+			[
+				"lara",
+				"Laravel Generate: Model"
+			],
+			[
+				"model",
+				"Laravel Generate: Model"
+			],
+			[
+				"install packa",
+				"Package Control: Install Package"
+			],
+			[
+				"install package ",
+				"Package Control: Install Package"
+			],
+			[
+				"package install",
+				"Package Control: Install Package"
+			],
+			[
+				"pacage install",
+				"Package Control: Install Package"
+			],
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"INSTA",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 528.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"ls",
+			"cd ..",
+			"ls",
+			"cd..",
+			"ls",
+			"LS",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/yomero/public_html/metro/itecsa/public_html/js/mapa/mapa.js",
+		"/home/yomero/public_html/metro/itecsa/public_html/js/mapa_metro2.js",
+		"/home/yomero/public_html/metro/itecsa/public_html/html/lineas.html",
+		"/home/yomero/public_html/metro/itecsa/public_html/html/teclado.html",
+		"/home/yomero/public_html/metro/itecsa/public_html/html/red.html",
+		"/home/yomero/public_html/pruebalaravel/vendor/laravel/framework/src/Illuminate/Html/HtmlBuilder.php",
+		"/home/yomero/public_html/metro/itecsa/public_html/html/det_estacion.html",
+		"/home/yomero/public_html/oldMetro/metro/itecsa/public_html/js/drawer.js",
+		"/home/yomero/public_html/metro/itecsa/public_html/html/det_linea.html",
+		"/home/yomero/public_html/metro/itecsa/public_html/html/galeria.html",
+		"/home/yomero/public_html/metro/itecsa/public_html/html/calcula_rutas.html",
+		"/home/yomero/public_html/palestra/Vistas/goodoc/lib/plugins/uploadFile/uploadFile.js",
+		"/home/yomero/public_html/metro/itecsa/public_html/html/avisos.html",
+		"/home/yomero/public_html/metro/itecsa/public_html/html/informacion.html",
+		"/home/yomero/public_html/metro/itecsa/public_html/css/style.css",
+		"/home/yomero/public_html/oldMetro/metro/itecsa/public_html/js/config_lineas_metro.js",
+		"/home/yomero/public_html/oldMetro/metro/itecsa/public_html/js/metro.js",
+		"/home/yomero/public_html/oldMetro/metro/itecsa/public_html/js/prueba_animacion.js",
+		"/home/yomero/public_html/oldMetro/metro/itecsa/public_html/index.html",
+		"/home/yomero/public_html/metro/itecsa/public_html/css/fonts.css",
+		"/home/yomero/public_html/express/app/views/index.ejs",
+		"/home/yomero/public_html/express/app/models/article.js",
+		"/home/yomero/public_html/express/config/config.js",
+		"/home/yomero/public_html/express/Gruntfile.js",
+		"/home/yomero/public_html/express/app.js",
+		"/home/yomero/public_html/express/config/express.js",
+		"/home/yomero/public_html/express/app/controllers/home.js",
+		"/home/yomero/tmp/grav_libre",
+		"/home/yomero/Dropbox/notarias/TRADECO/Sources_Media/Contacto Medios Metro:",
+		"/home/yomero/public_html/metro/itecsa/public_html/js/drawer.js",
+		"/home/yomero/Descargas/Funcion.java",
+		"/home/yomero/Descargas/Runner.java",
+		"/home/yomero/proyectos/tauro/erp-tauro/models/clientModel.js",
+		"/home/yomero/python/prueba.py",
+		"/home/yomero/public_html/tauro/app/database/migrations/2014_07_12_061803_create_productos_table.php",
+		"/home/yomero/public_html/pruebalaravel/app/models/Fish.php",
+		"/home/yomero/public_html/pruebalaravel/app/start/global.php",
+		"/home/yomero/public_html/pruebalaravel/app/config/database.php",
+		"/home/yomero/public_html/pruebalaravel/app/models/Bear.php",
+		"/home/yomero/public_html/pruebalaravel/app/database/migrations/2014_07_11_161915_create_bears_table.php",
+		"/home/yomero/public_html/pruebalaravel/app/routes.php",
+		"/home/yomero/public_html/pruebalaravel/app/database/migrations/2014_07_11_162510_create_fish_table.php",
+		"/home/yomero/public_html/pruebalaravel/artisan",
+		"/home/yomero/public_html/pruebalaravel/composer.json",
+		"/home/yomero/public_html/pruebalaravel/app/models/User.php",
+		"/home/yomero/public_html/palestra/Vistas/goodoc/css/componentsMain.less",
+		"/home/yomero/proyectos/tauro/database.sql",
+		"/home/yomero/public_html/palestra/Vistas/goodoc/css/expediente.less",
+		"/home/yomero/public_html/palestra/Vistas/goodoc/css/login.less",
+		"/home/yomero/public_html/palestra/Vistas/goodoc/css/style.less",
+		"/home/yomero/public_html/palestra/Vistas/goodoc/css/style_adm.less",
+		"/home/yomero/public_html/palestra/Vistas/goodoc/css/tabs.less",
+		"/home/yomero/public_html/palestra/Vistas/goodoc/css/variables.less",
+		"/home/yomero/public_html/palestra/Vistas/goodoc/css/variables.css",
+		"/home/yomero/.config/sublime-text-3/Packages/Pretty JSON/Pretty JSON.sublime-settings",
+		"/home/yomero/.config/sublime-text-3/Packages/User/Pretty JSON.sublime-settings"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 88.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"“",
+			"”",
+			"“",
+			"”",
+			"“",
+			"”",
+			"“",
+			"trazaRuta",
+			"370",
+			"cmp:isr",
+			"op_isr_noexenta",
+			"op_isr_pago",
+			"379,535",
+			"linea2Ruta",
+			"muestr",
+			"esconde",
+			"destru",
+			"oculta",
+			"destruyeOverflow",
+			"cortina",
+			"esconde",
+			"muestraO",
+			"esconde",
+			"true",
+			"trazandoRuta = true",
+			"trazaRuta",
+			"NODO",
+			"trazaRuta",
+			"style_estacion",
+			"trazaRuta",
+			"}\n",
+			"||",
+			"==",
+			"profile",
+			"productos"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"\"",
+			"cmp:subfrm_subform_0",
+			"isr_noexenta",
+			"isr_pago"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/yomero/public_html/metro/itecsa/public_html/red.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4766,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								222,
+								9,
+								8,
+								12,
+								37,
+								26,
+								0,
+								0,
+								0,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/yomero/public_html/metro/itecsa/public_html/js/mapa/mapa.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2257,
+						"regions":
+						{
+							"bookmarks":
+							{
+								"flags": 144,
+								"icon": "bookmark",
+								"regions":
+								[
+									[
+										2257,
+										2257
+									]
+								],
+								"scope": "bookmarks"
+							}
+						},
+						"selection":
+						[
+							[
+								2257,
+								2257
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								222,
+								9,
+								9,
+								14,
+								34,
+								42,
+								0,
+								0,
+								0,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 1049.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11684,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11684,
+								11684
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4035.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 688,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								688,
+								688
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"auto_name": "{",
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/yomero/public_html/palestra/Vistas/goodoc/css/style_adm.less",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3115,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2152,
+								2152
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content"
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								222,
+								8,
+								11,
+								9,
+								19,
+								35,
+								0,
+								0,
+								0,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/LESS/LESS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2187.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/home/yomero/public_html/palestra/Vistas/goodoc/css/style_adm.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 37403,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2832,
+								2832
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content"
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								222,
+								9,
+								12,
+								15,
+								44,
+								11,
+								0,
+								0,
+								0,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/home/yomero/public_html/metro/itecsa/public_html/TEMPORAL/utiles.objetoMetro",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5964,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5706,
+								5706
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								222,
+								9,
+								10,
+								14,
+								52,
+								43,
+								0,
+								0,
+								0,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3462.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/home/yomero/public_html/metro/itecsa/public_html/js/resources/lineas.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15038,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1642,
+								1642
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								222,
+								9,
+								9,
+								15,
+								35,
+								41,
+								0,
+								0,
+								0,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/home/yomero/public_html/metro/itecsa/public_html/js/resources/rutas.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2518,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								51,
+								51
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content"
+							],
+							"c_time":
+							[
+								128,
+								3,
+								99,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								100,
+								97,
+								116,
+								101,
+								116,
+								105,
+								109,
+								101,
+								10,
+								113,
+								0,
+								67,
+								10,
+								7,
+								222,
+								9,
+								9,
+								15,
+								37,
+								19,
+								0,
+								0,
+								0,
+								113,
+								1,
+								133,
+								113,
+								2,
+								82,
+								113,
+								3,
+								46
+							],
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 29.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 160.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "/home/yomero/public_html/metro/itecsa/metro.sublime-project",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+		],
+		"width": 432.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 312.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
