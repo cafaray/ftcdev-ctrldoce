@@ -1,6 +1,11 @@
+<%@page import="com.ftc.modelo.DocumentoEstatus"%>
+<%@page import="com.ftc.gedoc.bo.impl.DocumentoBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.DocumentoBO"%>
+<%@page import="com.ftc.gedoc.bo.impl.PersonaBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.PersonaBO"%>
+<%@page import="com.ftc.modelo.Documento"%>
 <%@page import="com.ftc.gedoc.utiles.comparators.DocumentoComparatorPorDocumento"%>
 <%@page import="com.ftc.gedoc.utiles.comparators.DocumentoComparatorPorEstatus"%>
-<%@page import="com.ftc.gedoc.utiles.DocumentoEstatus"%>
 <%@page import="com.ftc.gedoc.utiles.Seguridad"%>
 <%@page import="com.ftc.gedoc.utiles.comparators.DocumentoComparatorPorFecha"%>
 <%@page import="com.ftc.gedoc.utiles.comparators.DocumentoComparatorPorEmpresa"%>
@@ -11,8 +16,6 @@
 <%@page import="com.ftc.aq.Conexion"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="com.ftc.gedoc.utiles.Persona"%>
-<%@page import="com.ftc.gedoc.utiles.Documento"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -280,7 +283,7 @@
         <%
             if (seguridad == null || session.isNew()) {
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%} else {
@@ -296,7 +299,7 @@
             </form>
             <form id="FORM_FILTER" method="POST">
                 <input type="hidden" name="pagina" value="1" />
-                <table cellspacing="5px" >
+                <table>
                     <tr>                        
                         <th colspan="2" align="center">Per&iacute;odo de fechas</th>
                         <th align="center">Empresa</th>
@@ -342,6 +345,7 @@
                 conexion = Conexion.getConexion();
                 List<Documento> listado = null;
                 String empresa = "";
+                DocumentoBO boDoc = new DocumentoBOImpl();
                 if (session.getAttribute(tipo) != null && !hayFiltro && !mostrarTodo) {
                     listado = (List<Documento>) session.getAttribute(tipo);
                 } else {
@@ -350,11 +354,11 @@
                             empresa = "*";
                         } else {
                             empresa = identificador;
-                        }
-                        listado = Persona.listadoDocumentos(empresa, tipo, fechai, fechaf, sesion, conexion);
+                        }                        
+                        listado = boDoc.listadoDocumentos(empresa, tipo, fechai, fechaf, sesion);
                     } else {
                         empresa = (String) session.getAttribute("persona");
-                        listado = Persona.listadoDocumentos(empresa, tipo, fechai, fechaf, sesion, conexion);
+                        listado = boDoc.listadoDocumentos(empresa, tipo, fechai, fechaf, sesion);
                     }
                     session.setAttribute(tipo, listado);
                     pagina = 1;
@@ -448,17 +452,17 @@
             <%
                 }
             %>
-            <tfoot>
-            <td colspan="8" style="text-align: center">
-                P&aacute;gina <%=pagina%> de <%=paginas%> 
-                <br />
-                <a id ="primero" href="javascript:ver('vistadoce.jsp?tipo=P&pagina=1');">&lt;&lt;</a>&nbsp;&nbsp;
-                <a id ="anterior" href="javascript:ver('vistadoce.jsp?tipo=P&pagina=<%=(pagina - 1 < 0 ? 1 : pagina - 1)%>');">&lt;</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a id ="siguiente" href="javascript:ver('vistadoce.jsp?tipo=P&pagina=<%=(pagina + 1 > paginas ? 1 : pagina + 1)%>');">&gt;</a>
-                &nbsp;&nbsp;<a id ="ultimo" href="javascript:ver('vistadoce.jsp?tipo=P&pagina=<%=paginas%>');">&gt;&gt;</a>               
-            </td>
-            </tfoot>
+            <tr>
+            		<td colspan="8" style="text-align: center">
+                		P&aacute;gina <%=pagina%> de <%=paginas%> 
+                		<br />
+                		<a id ="primero" href="javascript:ver('vistadoce.jsp?tipo=P&pagina=1');">&lt;&lt;</a>&nbsp;&nbsp;
+                		<a id ="anterior" href="javascript:ver('vistadoce.jsp?tipo=P&pagina=<%=(pagina - 1 < 0 ? 1 : pagina - 1)%>');">&lt;</a>
+                		&nbsp;&nbsp;&nbsp;&nbsp;
+                		<a id ="siguiente" href="javascript:ver('vistadoce.jsp?tipo=P&pagina=<%=(pagina + 1 > paginas ? 1 : pagina + 1)%>');">&gt;</a>
+                		&nbsp;&nbsp;<a id ="ultimo" href="javascript:ver('vistadoce.jsp?tipo=P&pagina=<%=paginas%>');">&gt;&gt;</a>               
+            		</td>
+            </tr>
         </table>
 
     </div>

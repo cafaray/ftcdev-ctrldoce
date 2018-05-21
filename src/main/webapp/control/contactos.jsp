@@ -1,16 +1,18 @@
+<%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
+<%@page import="com.ftc.gedoc.bo.impl.PersonaBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.PersonaBO"%>
+<%@page import="com.ftc.modelo.Persona"%>
+<%@page import="com.ftc.gedoc.bo.impl.ContactoBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.ContactoBO"%>
+<%@page import="com.ftc.modelo.Contacto"%>
 <%@page import="com.ftc.gedoc.bo.impl.GrupoBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.GrupoBO"%>
-<%@page import="com.ftc.gedoc.utiles.Persona"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="com.ftc.gedoc.utiles.Seguridad"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
-<%@page import="com.ftc.gedoc.utiles.Contacto"%>
-<%@page import="com.ftc.aq.Conexion"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.sql.Connection"%>
 <%@page import="com.ftc.aq.Comunes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -262,19 +264,17 @@
             if (seguridad == null || session.isNew()) {
 
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%        } else {
-            Connection conexion = null;
             String mensaje = "";
             try {
-                conexion = Conexion.getConexion();
                 boolean isOwner = String.valueOf(session.getAttribute("propietario")).equals("S");
         %>
         <h2>Contactos registrados</h2>
         <div id="listado">
-            <table cellspacing="1" cellpadding="1" style="width:790px;border: 1px #ccc solid; table-layout: fixed">
+            <table style="width:790px;border: 1px #ccc solid; table-layout: fixed">
                 <tr class="tr_cab">
                     <th style="width:180px">Empresa</th>
                     <th style="width:200px">Nombre completo</th>
@@ -285,12 +285,12 @@
 <!--            </table>
             <table cellspacing="1" cellpadding="1" style="width: 800px;overflow: hidden; overflow-y: scroll;border: 1px #ccc solid;height: 100px; table-layout: fixed">-->
                 <%
-                    conexion = Conexion.getConexion();
                     List<Contacto> listado = null;
+                    ContactoBO boContacto = new ContactoBOImpl();
                     if (isOwner) {
-                        listado = Contacto.obtieneContactos("*", tipo, conexion, sesion);
+                        listado = boContacto.obtieneContactos("*", tipo, sesion);
                     } else {
-                        listado = Contacto.obtieneContactos(conexion, sesion);
+                        listado = boContacto.obtieneContactos(sesion);
                     }
                     GrupoBO bo = new GrupoBOImpl();
                     Iterator<Contacto> contactos = listado.iterator();
@@ -326,7 +326,8 @@
                     <label for="persona">Empresa</label>
                     <select name="persona" id="persona">
                         <%
-                            List<Persona> empresas = Persona.obtienePersonas(tipo.charAt(0), conexion, sesion);
+                        		PersonaBO boPersona = new PersonaBOImpl();
+                            List<Persona> empresas = boPersona.obtienePersonas(tipo.charAt(0), sesion);
                             for (Persona empresa : empresas) {
                                 String elemento = "";
                                 if (persona.equals(empresa.getIdentificador())) {
@@ -347,7 +348,7 @@
                     <label for="grupo">Grupo de seguridad</label>
                     <select name="grupo" id="grupo">
                         <%
-                            Map<String, String> listadoGrupos = Seguridad.listaGrupos(conexion, sesion);
+                            Map<String, String> listadoGrupos = Seguridad.listaGrupos(sesion);
                             Set<String> gruposLlaves = listadoGrupos.keySet();
                             Iterator<String> grupos = gruposLlaves.iterator();
                             while (grupos.hasNext()) {
@@ -395,22 +396,10 @@
             </form>
         </div>
         <%
-                } catch (SQLException sqle) {
-                    mensaje = sqle.getSQLState().equals("0") ? sqle.getMessage() : "Excepci�n al realizar el proceso. " + sqle.getSQLState() + "-" + sqle.getErrorCode();
-                    Comunes.escribeLog(getServletContext().getInitParameter("logLocation"), sqle, (String) session.getAttribute("usuario"));
-                } catch (Exception e) {
-                    mensaje = "Excepci�n al realizar el proceso. " + e.getMessage();
+                } catch (GeDocBOException e) {
+                    mensaje = e.getMessage();
                     Comunes.escribeLog(getServletContext().getInitParameter("logLocation"), e, (String) session.getAttribute("usuario"));
                 } finally {
-                    if (conexion != null) {
-                        try {
-                            if (!conexion.isClosed()) {
-                                conexion.close();
-                            }
-                        } catch (SQLException sqle) {
-                            //NOTHING TO DO
-                        }
-                    }
                     if (mensaje.length() > 0) {
                         out.println(String.format("<script>alert(\"%s\")</script>", mensaje));
                     }

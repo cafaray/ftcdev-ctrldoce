@@ -1,11 +1,13 @@
+<%@page import="com.ftc.gedoc.bo.impl.DocumentoBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.DocumentoBO"%>
+<%@page import="com.ftc.modelo.Documento"%>
+<%@page import="com.ftc.modelo.DocumentoEstatus"%>
 <%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
 <%@page import="com.ftc.gedoc.utiles.Seguridad"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.ftc.gedoc.bo.impl.DocumentoEstatusBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.DocumentoEstatusBO"%>
 <%@page import="java.util.List"%>
-<%@page import="com.ftc.gedoc.utiles.DocumentoEstatus"%>
-<%@page import="com.ftc.gedoc.utiles.Documento"%>
 <%@page import="com.ftc.aq.Comunes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -87,7 +89,8 @@
                 Documento documento = new Documento();
                 if (cmd.startsWith(Comunes.toMD5("documento.cambiar-estatus".concat(session.getId())).toUpperCase())) {
                     factura = cmd.substring(Comunes.toMD5("documento.cambiar-estatus".concat(session.getId())).length());
-                    documento = documento.findById(factura);
+                    DocumentoBO boDoc = new DocumentoBOImpl();
+                    documento = boDoc.findById(factura);
                     if (documento != null) {
                         DocumentoEstatusBO bo = new DocumentoEstatusBOImpl();
                         List<DocumentoEstatus> docEstatus = bo.listar(documento.getPersona(), documento.getIdentificador());

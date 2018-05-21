@@ -1,8 +1,8 @@
+<%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
+<%@page import="com.ftc.gedoc.bo.impl.PersonaBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.PersonaBO"%>
+<%@page import="com.ftc.modelo.Persona"%>
 <%@page import="java.util.Iterator"%>
-<%@page import="com.ftc.aq.Conexion"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.SQLException"%>
-<%@page import="com.ftc.gedoc.utiles.Persona"%>
 <%@page import="java.util.List"%>
 <%@page import="com.ftc.aq.Comunes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -149,11 +149,10 @@
             String sesion = session.getId();
             if (seguridad == null || session.isNew()) {
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%        } else {
-            Connection conexion = null;
             String mensaje = "";
             try {
         %>
@@ -164,8 +163,8 @@
             </table>
             <table style="width: 550px;overflow: hidden;overflow-y: scroll;border: 1px #ccc solid;">
                 <%
-                    conexion = Conexion.getConexion();
-                    List<Persona> listado = Persona.obtienePersonas(tipo.charAt(0), conexion, sesion);
+                		PersonaBO bo = new PersonaBOImpl();
+                    List<Persona> listado = bo.obtienePersonas(tipo.charAt(0), sesion);
                     Iterator<Persona> personas = listado.iterator();
                     int cont = 0;
                     while (personas.hasNext()) {
@@ -204,22 +203,10 @@
             </form>
         </div>                    
         <%
-                } catch (SQLException sqle) {
-                    mensaje = sqle.getSQLState().equals("0") ? sqle.getMessage() : "Excepci�n al realizar el proceso. " + sqle.getSQLState() + "-" + sqle.getErrorCode();
-                    Comunes.escribeLog(getServletContext().getInitParameter("logLocation"), sqle, (String) session.getAttribute("usuario"));
-                } catch (Exception e) {
-                    mensaje = "Excepci�n al realizar el proceso. " + e.getMessage();
+                } catch (GeDocBOException e) {
+                    mensaje = e.getMessage();
                     Comunes.escribeLog(getServletContext().getInitParameter("logLocation"), e, (String) session.getAttribute("usuario"));
                 } finally {
-                    if (conexion != null) {
-                        try {
-                            if (!conexion.isClosed()) {
-                                conexion.close();
-                            }
-                        } catch (SQLException sqle) {
-                            //NOTHING TO DO
-                        }
-                    }
                     if (mensaje.length() > 0) {
                         out.println(String.format("<script>alert(\"%s\")</script>", mensaje));
                     }

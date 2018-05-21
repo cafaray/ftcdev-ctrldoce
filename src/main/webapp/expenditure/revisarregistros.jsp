@@ -50,7 +50,7 @@
             if (seguridad == null || session.isNew()) {
 
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%        } else {

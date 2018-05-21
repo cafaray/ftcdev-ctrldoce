@@ -1,19 +1,16 @@
+<%@page import="com.ftc.gedoc.bo.impl.PersonaBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.PersonaBO"%>
+<%@page import="com.ftc.modelo.Persona"%>
+<%@page import="com.ftc.modelo.CEPArchivo"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="com.ftc.gedoc.utiles.comparators.CEPComparatorPorDocumento"%>
 <%@page import="com.ftc.gedoc.utiles.comparators.CEPComparatorPorEmpresa"%>
 <%@page import="com.ftc.gedoc.utiles.comparators.CEPComparatorPorFecha"%>
-<%@page import="com.ftc.services.invoice.modelo.CEPArchivo"%>
 <%@page import="com.ftc.gedoc.bo.impl.CEPArchivoBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.CEPArchivoBO"%>
-<%@page import="com.ftc.services.invoice.modelo.CEPCabecera"%>
-<%@page import="java.sql.SQLException"%>
 <%@page import="java.util.Collections"%>
-<%@page import="com.ftc.gedoc.utiles.Persona"%>
-<%@page import="com.ftc.gedoc.utiles.Documento"%>
 <%@page import="java.util.List"%>
-<%@page import="com.ftc.aq.Conexion"%>
-<%@page import="java.sql.Connection"%>
 <%@page import="com.ftc.aq.Comunes"%>
 <%@page import="com.ftc.gedoc.utiles.Seguridad"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -292,7 +289,7 @@
         <%
             if (seguridad == null || session.isNew()) {
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%} else {
@@ -307,7 +304,7 @@
             </form>
             <form id="FORM_FILTER" method="POST">
                 <input type="hidden" name="pagina" value="1" />
-                <table cellspacing="5px" >
+                <table>
                     <tr>                        
                         <th colspan="2" align="center">Per&iacute;odo de fechas</th>
                         <th align="center">Empresa</th>
@@ -420,7 +417,8 @@
                         files[i++] = "<a target=\"_blank\" href=\"../vistaprev?archivo=" + path.append(file.toLowerCase()).toString() + "\" title = \"" + file + "\">" + image + "</a>";
                         
                     }
-                    Persona p = Persona.localizaPersonasPorIdentificador(doc.getPersona());
+                    PersonaBO bo = new PersonaBOImpl();
+                    Persona p = bo.localizaPersonasPorIdentificador(doc.getPersona());
                     Date fecha = doc.getFecha();
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                     String strFecha = dateFormat.format(fecha);
@@ -461,7 +459,7 @@
             <%
                 }
             %>
-            <tfoot>
+            <tr>
             <td colspan="8" style="text-align: center">
                 P&aacute;gina <%=pagina%> de <%=paginas%> 
                 <br />
@@ -471,7 +469,7 @@
                 <a id ="siguiente" href="javascript:ver('listadoCEP.jsp?tipo=P&pagina=<%=(pagina + 1 > paginas ? 1 : pagina + 1)%>');">&gt;</a>
                 &nbsp;&nbsp;<a id ="ultimo" href="javascript:ver('listadoCEP.jsp?tipo=P&pagina=<%=paginas%>');">&gt;&gt;</a>               
             </td>
-            </tfoot>
+            </tr>
         </table>
 
     </div>

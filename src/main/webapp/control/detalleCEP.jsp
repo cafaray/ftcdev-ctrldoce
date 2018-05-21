@@ -1,16 +1,16 @@
+<%@page import="com.ftc.modelo.CEPPago"%>
+<%@page import="com.ftc.modelo.CEPConcepto"%>
+<%@page import="com.ftc.modelo.CEPCabecera"%>
 <%@page import="com.ftc.gedoc.dao.impl.CEPConceptoDAOImpl"%>
 <%@page import="com.ftc.gedoc.dao.CEPConceptoDAO"%>
 <%@page import="com.ftc.gedoc.dao.impl.CEPPagoDAOImpl"%>
 <%@page import="com.ftc.gedoc.dao.CEPPagoDAO"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.NumberFormat"%>
-<%@page import="com.ftc.services.invoice.modelo.CEPPago"%>
 <%@page import="java.util.List"%>
-<%@page import="com.ftc.services.invoice.modelo.CEPConcepto"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.ftc.gedoc.dao.impl.CEPCabeceraDAOImpl"%>
 <%@page import="com.ftc.gedoc.dao.CEPCabeceraDAO"%>
-<%@page import="com.ftc.services.invoice.modelo.CEPCabecera"%>
 <%@page import="com.ftc.aq.Comunes"%>
 <%@page import="com.ftc.gedoc.utiles.Seguridad"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -85,7 +85,7 @@
     <body>
         <%            if (seguridad == null || session.isNew()) {
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%} else {
@@ -109,13 +109,13 @@
         <p class="documentoPago">
             <h2>Documento de pago <%=estatus%></h2>
             <table>
-                <thead>
+                <tr>
                     <th>UUID</th>
                     <th>Serie</th>
                     <th>Folio</th>
                     <th>Fecha</th>
                     <th>Emisor</th>
-                </thead>
+                </tr>
                 <tr>
                     <td><%=pagoUUID %></td>
                     <td><%=pagoSerie %></td>
@@ -128,11 +128,11 @@
         <p>
             <h2>Conceptos</h2>
             <table>
-                <thead>
+                <tr>
                     <th>Cantidad</th>
                     <th>Producto Servicio</th>
                     <th>Descripcion</th>
-                </thead>
+                </tr>
                 <%
                     CEPConceptoDAO daoConcepto = new CEPConceptoDAOImpl(uuid);
                     List<CEPConcepto> conceptos = daoConcepto.listaCEPConcepto();
@@ -157,7 +157,7 @@
         <p>
         <h2>Pagos</h2>
             <table>
-                <thead>
+                <tr>
                     <th>Cta. Ordenante</th>
                     <th>Cta. Beneficiario</th>
                     <th>UUID</th>
@@ -165,7 +165,7 @@
                     <th style="width: 100px;">Saldo anterior</th>
                     <th style="width: 100px;">Pagado</th>
                     <th style="width: 100px;">Insoluto</th>
-                </thead>
+                </tr>
                 <%
                     CEPPagoDAO daoPago = new CEPPagoDAOImpl(uuid);
                     List<CEPPago> pagos = daoPago.listaPagos();
