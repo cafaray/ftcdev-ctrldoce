@@ -26,7 +26,7 @@
             String rfc = request.getParameter("rfc");
             String cmd = request.getParameter("cmd");
             String logLocation = getServletContext().getInitParameter("logLocation");
-            Connection conexion = null;
+            //Connection conexion = null;
             try {
                 //if (cmd.equals(Comunes.toMD5("IDENTIFICA_USUARIO" + session.getId()))) {
                 // 210714: selecciona el archivo de configuraci�n por dominio:               

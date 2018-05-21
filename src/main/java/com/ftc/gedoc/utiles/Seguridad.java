@@ -4,6 +4,8 @@ import com.ftc.aq.Comunes;
 import com.ftc.aq.Conexion;
 import com.ftc.aq.SpParam;
 import com.ftc.aq.SpParams;
+import com.ftc.gedoc.exceptions.GeDocDAOException;
+
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,8 +16,8 @@ import java.util.Map;
 
 public final class Seguridad implements Serializable{
 
-    private int seguridad = 0;
-    private String cadena = "";
+	private static final long serialVersionUID = 1L;
+	private String cadena = "";
     private String proveedor = "";
     private String cliente = "";
     private String gasto = "";
@@ -34,7 +36,6 @@ public final class Seguridad implements Serializable{
      */
 
     public Seguridad(int seguridad) {
-        this.seguridad = seguridad;
         this.cadena = Integer.toBinaryString(seguridad);
         try {
             cadena = Comunes.rellenaCeros(cadena, 25);
@@ -113,7 +114,45 @@ public final class Seguridad implements Serializable{
         return gasto.contains("1");
     }
 
-    public static Map<String,String> listaGrupos(Connection conexion, String sesion)throws SQLException{
+    public static boolean validaUsuario(String servidor, String baseDatos, String usuario, String contrasenia) throws GeDocDAOException {
+    		try {
+    			return Conexion.validaUsuarioMySql(servidor, baseDatos, usuario, contrasenia);
+    		} catch (SQLException e) {
+    			throw new GeDocDAOException("Imposible conectar con la base de datos. Revise el log para mas detalle.", e);
+		}
+    }
+    
+    public static Object[] whoIs(String usuario, String contrasenia, String rfc, String ip, String sesion) 
+    		throws GeDocDAOException {
+    		Connection conexion = null;
+    		try {
+    			conexion = Conexion.getConexion();
+    			SpParams params = new SpParams();
+            params.add(new SpParam(1, Types.VARCHAR, usuario));
+            params.add(new SpParam(2, Types.VARCHAR, contrasenia));
+            params.add(new SpParam(3, Types.VARCHAR, rfc));
+            params.add(new SpParam(4, Types.VARCHAR, ip));
+            params.add(new SpParam(5, Types.VARCHAR, sesion));
+            params.add(new SpParam(6, Types.VARCHAR, null, true));
+            params.add(new SpParam(7, Types.VARCHAR, null, true));
+            params.add(new SpParam(8, Types.VARCHAR, null, true));
+            params.add(new SpParam(9, Types.VARCHAR, null, true));
+            params.add(new SpParam(10, Types.VARCHAR, null, true));
+            Object[] vuelta = Conexion.ejecutaStoreProcedureConSalida(conexion, "whois", params);
+            return vuelta;
+    		} catch (SQLException e) {
+    			throw new GeDocDAOException("Imposible determinar el perfil del usuario. Revise el log para mas detalle.", e);
+    		} finally {
+        		try {
+        			if(conexion!=null && !conexion.isClosed()){
+                conexion.close();
+        			}
+        		}catch(SQLException e) {}
+        }
+    }
+    
+    public static Map<String,String> listaGrupos(String sesion) throws GeDocDAOException {
+    		Connection conexion = null;
         try{
             if(conexion==null || conexion.isClosed()){
                 conexion = Conexion.getConexion();
@@ -126,10 +165,14 @@ public final class Seguridad implements Serializable{
                 listado.put(rst.getString(1), rst.getString(2));
             }
             return listado;
-        }finally{
-            if(conexion!=null || !conexion.isClosed()){
+        }catch(SQLException e) {
+        		throw new GeDocDAOException("Imposible recuperar los datos de grupo. Revise el log para mas detalle.", e);
+        } finally {
+        		try {
+        			if(conexion!=null && !conexion.isClosed()){
                 conexion.close();
-            }            
+        			}
+        		}catch(SQLException e) {}
         }
     }
 
