@@ -1,11 +1,11 @@
+<%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
+<%@page import="com.ftc.gedoc.bo.impl.ContactoBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.ContactoBO"%>
+<%@page import="com.ftc.modelo.Contacto"%>
 <%@page import="java.util.LinkedList"%>
 <%@page import="com.ftc.aq.Comunes"%>
-<%@page import="java.sql.SQLException"%>
 <%@page import="java.util.Iterator"%>
-<%@page import="com.ftc.gedoc.utiles.Contacto"%>
 <%@page import="java.util.List"%>
-<%@page import="com.ftc.aq.Conexion"%>
-<%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -65,28 +65,27 @@
             if (seguridad == null || session.isNew()) {
 
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("default.jsp");
         </script>
-        <%        } else {
-            Connection conexion = null;
+        <%        } else {            
             String mensaje = "";
-            try {
-                conexion = Conexion.getConexion();
+            try {                
                 boolean isOwner = String.valueOf(session.getAttribute("propietario")).equals("S");
         %>
         <h2>Contactos registrados</h2>
         <div id="listado">
-            <table cellspacing="1" cellpadding="5" style="width:650px;border: 1px #ccc solid;">
+            <table style="width:650px;border: 1px #ccc solid;">
                 <tr><th width="200px">Empresa</th><th width="200px">Nombre completo</th><th width="120px">Correo</th><th width="30px">Suspender</th></tr>
             </table>
             <table style="width: 650px;overflow: hidden;overflow-y: scroll;border: 1px #ccc solid;">
                 <%
-                    conexion = Conexion.getConexion();
+                    
                     //boolean isOwner = String.valueOf(session.getAttribute("propietario")).equals("S");
                     List<Contacto> listado = null;
                     if (String.valueOf(session.getAttribute("propietario")).equals("S")) {
-                        listado = Contacto.listaContactosSuspendidos(conexion, sesion);
+                    		ContactoBO bo = new ContactoBOImpl();
+                        listado = bo.listaContactosSuspendidos(sesion);
                     } else {
                         listado = new LinkedList<Contacto>();
                     }
@@ -100,22 +99,10 @@
             </table>
         </div>
         <%
-                } catch (SQLException sqle) {
-                    mensaje = sqle.getSQLState().equals("0") ? sqle.getMessage() : "Excepci�n al realizar el proceso. " + sqle.getSQLState() + "-" + sqle.getErrorCode();
-                    Comunes.escribeLog(getServletContext().getInitParameter("logLocation"), sqle, (String) session.getAttribute("usuario"));
-                } catch (Exception e) {
-                    mensaje = "Excepci�n al realizar el proceso. " + e.getMessage();
+                } catch (GeDocBOException e) {
+                    mensaje = e.getMessage();
                     Comunes.escribeLog(getServletContext().getInitParameter("logLocation"), e, (String) session.getAttribute("usuario"));
                 } finally {
-                    if (conexion != null) {
-                        try {
-                            if (!conexion.isClosed()) {
-                                conexion.close();
-                            }
-                        } catch (SQLException sqle) {
-                            //NOTHING TO DO
-                        }
-                    }
                     if (mensaje.length() > 0) {
                         out.println(String.format("<script>alert(\"%s\")</script>", mensaje));
                     }

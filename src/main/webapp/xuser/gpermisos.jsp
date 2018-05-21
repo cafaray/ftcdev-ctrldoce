@@ -1,6 +1,6 @@
+<%@page import="com.ftc.modelo.Grupo"%>
 <%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
 <%@page import="com.ftc.aq.Comunes"%>
-<%@page import="com.ftc.gedoc.utiles.Grupo"%>
 <%@page import="com.ftc.gedoc.bo.impl.GrupoBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.GrupoBO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -71,7 +71,7 @@
         <h2>Permisos para el grupo <%=dsgrupo%></h2>
         <form id="FORM_SECMODE" method="POST" action="../ws/grupo/gsecmod.do">
             <input type="hidden" name="idgrupo" id="idgrupo" value="<%=((Comunes.toMD5("chmod")+session.getId()) + idgrupo).toUpperCase() %>" />
-            <table cellspacing="1" cellpadding="1" style="width:790px;border: 1px #ccc solid;">
+            <table style="width:790px;border: 1px #ccc solid;">
                 <tr>
                     <td colspan="4"><h3>M&oacute;dulos de la aplicaci&oacute;n</h3></td>
                 </tr>

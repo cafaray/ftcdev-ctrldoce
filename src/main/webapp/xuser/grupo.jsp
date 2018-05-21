@@ -1,8 +1,8 @@
+<%@page import="com.ftc.modelo.Grupo"%>
 <%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
 <%@page import="com.ftc.aq.Comunes"%>
 <%@page import="com.ftc.gedoc.bo.impl.GrupoBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.GrupoBO"%>
-<%@page import="com.ftc.gedoc.utiles.Grupo"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -104,7 +104,7 @@
             <input type="hidden" name="grupo" id="grupo" value="" />
         </form>
         <h2>Gestor de grupos</h2>
-        <table cellspacing="1" cellpadding="5" style="width:650px;border: 1px #ccc solid;">
+        <table style="width:650px;border: 1px #ccc solid;">
             <tr>
                 <th style="width: 580px">Grupo</th>
                 <th style="width: 35px">&nbsp;</th>
@@ -131,11 +131,11 @@
             %>
         </table>
         <p>
-        <form id="FORM_NEWGROUP" method="POST">
-            Nuevo Grupo:&nbsp;&nbsp;&nbsp;<input type="text" name="grupo" id="grupo" value="" class="ui-corner-tl" />
-            <input type="hidden" name="cmd" value="<%=Comunes.toMD5(session.getId()+"r").toUpperCase() %>" />
-            <a id="nuevoGrupo">Registrar</a>
-        </form>
+            <form id="FORM_NEWGROUP" method="POST">
+                Nuevo Grupo:&nbsp;&nbsp;&nbsp;<input type="text" name="grupo" id="grupo" value="" class="ui-corner-tl" />
+                <input type="hidden" name="cmd" value="<%=Comunes.toMD5(session.getId()+"r").toUpperCase() %>" />
+                <a id="nuevoGrupo">Registrar</a>
+            </form>
         </p>
     </body>
 </html>
