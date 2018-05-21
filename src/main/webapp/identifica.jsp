@@ -2,15 +2,10 @@
 <%@page import="com.ftc.gedoc.utiles.Seguridad"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="java.sql.SQLException"%>
 <%@page import="java.io.FileInputStream"%>
 <%@page import="java.io.InputStream"%>
 <%@page import="java.util.Properties"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="com.ftc.aq.Conexion"%>
 <%@page import="java.sql.Types"%>
-<%@page import="com.ftc.aq.SpParam"%>
-<%@page import="com.ftc.aq.SpParams"%>
 <%@page import="com.ftc.aq.Comunes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
