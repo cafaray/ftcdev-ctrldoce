@@ -103,7 +103,6 @@
                     <div class="loginForm  grad_gray">
                         <div class="login_avatar">
                             <img src="resources/images/<%=serverName%>.png" style="width: 200px">
-
                         </div>
                         <form name="FORM_IDENTIFICA_USUARIO" id="FORM_IDENTIFICA_USUARIO">
                             <div class="login_form" id="frm_login" >
@@ -118,9 +117,7 @@
                                 <div class="campoLogin">  
                                     <label class="labelLogin"><b>Contrase&ntilde;a</b></label>
                                     <input type="password" name="contrasena" id="contrasena" placeholder="" maxlength="16" required/>
-                                    
                                 </div>
-
                                 <div class="campoLogin">
                                     <a id="enviar" style="width: 100%">Acceder</a>
                                 </div>
@@ -142,7 +139,7 @@
             <div id="wrap_footer">
                 <div class="colums2">
                     <p>
-                        <b>Desarrollado por Farias Telecomunicaciones y c&oacute;mputo &reg;.</b>  
+                        <b>Desarrollado por FTCDEVS&reg;</b>
                     </p>
                     <p>
                         121 Delia, Col. Guadalupe Tepeyac, Del. Gustavo A Madero, C.P.11320
@@ -152,7 +149,11 @@
                     <p>Contrataci&oacute;n de servicio a: <b>ventas@ftcenlinea.com</b><br />
                     Soporte t&eacute;cnico: <b>soporte@ftcenlinea.com</b></p>             
                     <p>
-                        Implementaci&oacute;n por parte de Carlos A Farias y Oscar G Farias
+                        Implementaci&oacute;n de un gestor de documentos fiscales. Acepta facturas SAT y CEP. Repositorio de documentos.
+                        <br />An&aacute;lisis de datos de facturas de clientes y proveedores, as&iacute; como pagos electr&oacute;nicos.
+                        <br />Incluye m&oacute;dulo para la gesti&oacute;n de los gastos y permite revisar las facturas y notas relacionadas a una jornada.
+                        <br />M&oacute;dulos de seguridad, marcado de usuarios por rol y niveles de autorizaci&oacute;n.
+                        <br />M&oacute;dulo de Notificaciones y revisi&oacute;n de estatus de facturas para proveedores.
                     </p>
                 </div>
             </div>

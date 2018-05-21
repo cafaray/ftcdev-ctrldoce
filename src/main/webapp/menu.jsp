@@ -233,7 +233,7 @@
         </div>
         <%}%>
 
-        <script language="javascript" type="text/javascript">
+        <script>
             function cerrarSesion() {
                 window.parent.location.replace("default.jsp");
             }
