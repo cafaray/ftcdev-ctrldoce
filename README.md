@@ -18,4 +18,7 @@ we use TSMIUtil.jar and TSMIMail.jar, both of them are old external dependencies
                          -Dfile=<path-to-TSMIMail.jar> -DgroupId=ftc-devs-utils \ 
                          -DartifactId=<TSMIMail> -Dversion=<1.0.0> \
                          -Dpackaging=<jar> -DlocalRepositoryPath=</ftc/libs/>
+
+# Second challenge
+Change the statics methods used in many class that represent a model and also has functions. So, first we decouple the model and then transform the in DAO and BO objects. In this way we decouple the model an functionallity.
   
