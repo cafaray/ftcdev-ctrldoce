@@ -1,4 +1,6 @@
-<%@page import="com.ftc.gedoc.utiles.Periodo"%>
+<%@page import="com.ftc.modelo.Periodo"%>
+<%@page import="com.ftc.modelo.PeriodoCabecera"%>
+<%@page import="com.ftc.modelo.Contacto"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="com.ftc.gedoc.utiles.comparators.ExpensesComparatorPorDocumento"%>
 <%@page import="com.ftc.gedoc.utiles.comparators.ExpensesComparatorPorEstatus"%>
@@ -10,11 +12,8 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.ftc.gedoc.bo.impl.ContactoBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.ContactoBO"%>
-<%@page import="com.ftc.gedoc.utiles.Contacto"%>
 <%@page import="com.ftc.gedoc.utiles.Seguridad"%>
 <%@page import="java.text.DecimalFormat"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoRegistro"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoCabecera"%>
 <%@page import="java.util.List"%>
 <%@page import="com.ftc.gedoc.bo.impl.PeriodoBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.PeriodoBo"%>
@@ -341,8 +340,8 @@
             
             //listar los registros cabecera
             PeriodoBo bo = new PeriodoBOImpl();
-            List<PeriodoCabecera> cabeceras = new ArrayList();
-            List<PeriodoCabecera> listado = new ArrayList();
+            List<PeriodoCabecera> cabeceras = new ArrayList<PeriodoCabecera>();            		
+            List<PeriodoCabecera> listado = new ArrayList<PeriodoCabecera>();
             Periodo periodoActual = bo.actual();
             periodo = periodo.equals(".")?periodoActual.getIdentificador():bo.obtenerPeriodoPorFecha(periodo).getIdentificador();
             int paginacion = 50;
@@ -486,7 +485,7 @@
             </table>       
             </form>
         </div>
-        <table cellspacing="1" cellpadding="5" style="width:790px;border: 1px #ccc solid;">
+        <table style="width:790px;border: 1px #ccc solid;">
             <tr class="tr_cab">
                 <th><a id="sort_asignado" href="#"><img src="../resources/images/sort.png" height="16" width="16" /></a>&nbsp;&nbsp;Asignado a</th>
                 <th style="width: 60px"><a id="sort_fecha" href="#"><img src="../resources/images/sort.png" height="16" width="16" /></a>&nbsp;&nbsp;Fecha</th>

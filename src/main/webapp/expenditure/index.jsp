@@ -1,9 +1,9 @@
+<%@page import="com.ftc.modelo.Periodo"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.ftc.aq.Comunes"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.List"%>
-<%@page import="com.ftc.gedoc.utiles.Periodo"%>
 <%@page import="com.ftc.gedoc.bo.impl.PeriodoBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.PeriodoBo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -118,7 +118,7 @@
             if (seguridad == null || session.isNew()) {
 
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%        } else {  %>
@@ -131,7 +131,7 @@
         <a href="#" id="abrir" cmd="<%=Comunes.toMD5(session.getId().concat("generar-periodo-actual-")) %>">Generar per&iacute;odo actual</a>
         </span>
         </p>
-        <table cellspacing="1" cellpadding="5" style="width:650px;border: 1px #ccc solid;">
+        <table style="width:650px;border: 1px #ccc solid;">
             <tr>                
                 <th style="width:100px">Per&iacute;odo</th>
                 <th style="width:100px">Estatus</th>

@@ -1,10 +1,7 @@
-<%@page import="com.ftc.services.invoice.modelo.Cabecera"%>
-<%@page import="com.ftc.gedoc.utiles.CifraControl"%>
-<%@page import="com.ftc.gedoc.utiles.Periodo"%>
+<%@page import="com.ftc.modelo.PeriodoCabecera"%>
+<%@page import="com.ftc.modelo.Periodo"%>
 <%@page import="java.text.DecimalFormat"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoRegistro"%>
 <%@page import="com.ftc.aq.Comunes"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoCabecera"%>
 <%@page import="java.util.List"%>
 <%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
 <%@page import="com.ftc.gedoc.bo.impl.PeriodoBOImpl"%>
@@ -73,7 +70,7 @@
             if (seguridad == null || session.isNew()) {
 
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%        } else {
@@ -97,7 +94,7 @@
             <input type="hidden" name="cmd" id="cmd" value="<%=Comunes.toMD5("algun-valor-x")%>" />
         </form>
         <h2>Resumen de gastos</h2>
-        <table cellspacing="1" cellpadding="5" style="width:650px;border: 1px #ccc solid;">
+        <table style="width:650px;border: 1px #ccc solid;">
             <tr class="tr_cab">                
                 <th style="width: 110px">Asociados a:</th>
                 <th style="width: 110px">Monto</th>                                

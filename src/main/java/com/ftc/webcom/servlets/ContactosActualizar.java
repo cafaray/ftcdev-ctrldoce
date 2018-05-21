@@ -1,24 +1,23 @@
 package com.ftc.webcom.servlets;
 
-import com.ftc.aq.Comunes;
-import com.ftc.aq.Conexion;
-import com.ftc.gedoc.bo.ContactoBO;
-import com.ftc.gedoc.bo.impl.ContactoBOImpl;
-import com.ftc.gedoc.exceptions.GeDocBOException;
-import com.ftc.modelo.Contacto;
-
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ftc.aq.Comunes;
+import com.ftc.gedoc.bo.ContactoBO;
+import com.ftc.gedoc.bo.impl.ContactoBOImpl;
+import com.ftc.gedoc.exceptions.GeDocBOException;
+import com.ftc.modelo.Contacto;
+
 public class ContactosActualizar extends HttpServlet {
 
-    @Override
+	private static final long serialVersionUID = 1L;
+	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);

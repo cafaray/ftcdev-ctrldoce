@@ -1,11 +1,8 @@
+<%@page import="com.ftc.modelo.CifraControlAjuste"%>
+<%@page import="com.ftc.modelo.Periodo"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="com.ftc.gedoc.utiles.CifraControlAjuste"%>
-<%@page import="com.ftc.gedoc.utiles.CifraControl"%>
-<%@page import="com.ftc.gedoc.utiles.Periodo"%>
 <%@page import="java.text.DecimalFormat"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoRegistro"%>
 <%@page import="com.ftc.aq.Comunes"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoCabecera"%>
 <%@page import="java.util.List"%>
 <%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
 <%@page import="com.ftc.gedoc.bo.impl.PeriodoBOImpl"%>
@@ -67,7 +64,7 @@
             if (seguridad == null || session.isNew()) {
 
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%        } else {
@@ -86,7 +83,7 @@
         <h2>Ajustes de per&iacute;odo <%=String.format("%d-%d", actual.getAny(), actual.getPeriodo())%> - Cifras control </h2>
         <a id="regresar" cmd="<%=Comunes.toMD5("v-Cifra" + session.getId()).toUpperCase().concat(idPeriodo)%>">Regresar</a>
         <p>
-        <table cellspacing="1" cellpadding="5" style="width:650px;border: 1px #ccc solid;">
+        <table style="width:650px;border: 1px #ccc solid;">
             <tr class="tr_cab">
                 <th>Fecha</th>
                 <td>Total</td>

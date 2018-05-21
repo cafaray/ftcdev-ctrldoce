@@ -1,5 +1,9 @@
+<%@page import="com.ftc.gedoc.bo.impl.DocumentoBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.DocumentoBO"%>
+<%@page import="com.ftc.modelo.Documento"%>
+<%@page import="com.ftc.modelo.PeriodoRegistro"%>
 <%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
-<%@page import="com.ftc.gedoc.utiles.Documento"%>
+
 <%@page import="com.ftc.gedoc.utiles.TipoComprobante"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Set"%>
@@ -7,7 +11,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.ftc.gedoc.bo.impl.PeriodoBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.PeriodoBo"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoRegistro"%>
+
 <%@page import="java.util.List"%>
 <%@page import="com.ftc.aq.Comunes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -228,7 +232,7 @@
             if (seguridad == null || session.isNew()) {
 
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%        } else {
@@ -256,7 +260,7 @@
         </form>
         <h2>Pendientes de asignaci&oacute;n de tipo de gasto</h2>
         <div class="ui-corner-bl">
-            <table cellspacing="1" cellpadding="5" style="width:800px;border: 1px #ccc solid;">
+            <table style="width:800px;border: 1px #ccc solid;">
                 <tr>
                     <th style="width: 100px;">Fecha</th>
                     <th style="width: 100px;">Importe</th>
@@ -296,7 +300,8 @@
                     <td style="width: 140px;"><%=registro.getAutoriza() == null ? "" : registro.getAutoriza()%></td>
                     <%
                         Documento documento = new Documento();
-                        documento = documento.findById(registro.getEvidencia());
+                    	    DocumentoBO boDoc = new DocumentoBOImpl();
+                        documento = boDoc.findById(registro.getEvidencia());
                         String imagePdf = "<img src=\"../resources/images/pdf-icono.png\" height=\"26\" border=\"0\" />";
                         String imageXml = "<img src=\"../resources/images/xml-icono.png\" height=\"26\" border=\"0\" />";
                         String imageDef = "<img src=\"../resources/images/previa.png\" height=\"26\" border=\"0\" />";

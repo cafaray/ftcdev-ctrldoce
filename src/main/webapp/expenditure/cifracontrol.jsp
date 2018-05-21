@@ -1,9 +1,9 @@
-<%@page import="com.ftc.gedoc.utiles.CifraControl"%>
-<%@page import="com.ftc.gedoc.utiles.Periodo"%>
+<%@page import="com.ftc.modelo.CifraControl"%>
+<%@page import="com.ftc.modelo.Periodo"%>
 <%@page import="java.text.DecimalFormat"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoRegistro"%>
+
 <%@page import="com.ftc.aq.Comunes"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoCabecera"%>
+
 <%@page import="java.util.List"%>
 <%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
 <%@page import="com.ftc.gedoc.bo.impl.PeriodoBOImpl"%>
@@ -75,7 +75,7 @@
             if (seguridad == null || session.isNew()) {
 
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%        } else {
@@ -98,7 +98,7 @@
         <form id="FORM_RECORDS" action="detallecc.jsp">
             <input type="hidden" name="cmd" id="cmd" value="<%=Comunes.toMD5("algun-valor-x")%>" />
         </form>
-        <table cellspacing="1" cellpadding="5" style="width:650px;border: 1px #ccc solid;">
+        <table style="width:650px;border: 1px #ccc solid;">
             <tr class="tr_cab">
                 <th>Resumen de gastos</th>
                 <th style="width: 110px">Cifras Control</th>

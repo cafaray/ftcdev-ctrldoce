@@ -1,13 +1,15 @@
+<%@page import="com.ftc.gedoc.bo.impl.DocumentoBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.DocumentoBO"%>
+<%@page import="com.ftc.modelo.Documento"%>
+<%@page import="com.ftc.modelo.PeriodoRegistro"%>
+<%@page import="com.ftc.modelo.PeriodoCabecera"%>
+<%@page import="com.ftc.modelo.Periodo"%>
 <%@page import="com.ftc.aq.Comunes"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
-<%@page import="com.ftc.gedoc.utiles.Documento"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoRegistro"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
 <%@page import="java.util.List"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoCabecera"%>
-<%@page import="com.ftc.gedoc.utiles.Periodo"%>
 <%@page import="com.ftc.gedoc.bo.impl.PeriodoBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.PeriodoBo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -161,7 +163,7 @@
             if (seguridad == null || session.isNew()) {
 
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%        } else {
@@ -228,7 +230,8 @@
                             String strDocumento = registro.getNota();
                             if (strDocumento.startsWith("XML") && registro.getEvidencia() != null) {
                                 Documento documento = new Documento();
-                                documento = documento.findById(registro.getEvidencia());
+                                DocumentoBO boDoc = new DocumentoBOImpl();
+                                documento = boDoc.findById(registro.getEvidencia());
                                 if (documento != null) {
                                     String imagePdf = "<img src=\"../resources/images/pdf-icono.png\" height=\"26\" border=\"0\" />";
                                     String imageXml = "<img src=\"../resources/images/xml-icono.png\" height=\"26\" border=\"0\" />";

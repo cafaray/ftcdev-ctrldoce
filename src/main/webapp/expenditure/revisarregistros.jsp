@@ -1,4 +1,8 @@
-<%@page import="com.ftc.gedoc.utiles.Documento"%>
+<%@page import="com.ftc.gedoc.bo.impl.DocumentoBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.DocumentoBO"%>
+<%@page import="com.ftc.modelo.Documento"%>
+<%@page import="com.ftc.modelo.PeriodoRegistro"%>
+<%@page import="com.ftc.modelo.PeriodoCabecera"%>
 <%@page import="com.ftc.gedoc.utiles.TipoComprobante"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.Enumeration"%>
@@ -7,9 +11,7 @@
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoCabecera"%>
 <%@page import="java.util.List"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoRegistro"%>
 <%@page import="com.ftc.gedoc.bo.impl.PeriodoBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.PeriodoBo"%>
 <%@page import="com.ftc.aq.Comunes"%>
@@ -169,7 +171,8 @@
                             <%
                                 if (registro.getEvidencia() != null && !registro.getEvidencia().isEmpty()) {
                                     Documento documento = new Documento();
-                                    documento = documento.findById(registro.getEvidencia());
+                                    DocumentoBO boDoc = new DocumentoBOImpl();
+                                    documento = boDoc.findById(registro.getEvidencia());
                                     String imagePdf = "<img src=\"../resources/images/pdf-icono.png\" height=\"26\" border=\"0\" />";
                                     String imageXml = "<img src=\"../resources/images/xml-icono.png\" height=\"26\" border=\"0\" />";
                                     String imageDef = "<img src=\"../resources/images/previa.png\" height=\"26\" border=\"0\" />";

@@ -1,4 +1,8 @@
-<%@page import="com.ftc.gedoc.utiles.Documento"%>
+<%@page import="com.ftc.gedoc.bo.impl.DocumentoBOImpl"%>
+<%@page import="com.ftc.gedoc.bo.DocumentoBO"%>
+<%@page import="com.ftc.modelo.Documento"%>
+<%@page import="com.ftc.modelo.PeriodoRegistro"%>
+<%@page import="com.ftc.modelo.PeriodoCabecera"%>
 <%@page import="com.ftc.gedoc.utiles.TipoComprobante"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.Enumeration"%>
@@ -7,9 +11,7 @@
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.ftc.gedoc.exceptions.GeDocBOException"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoCabecera"%>
 <%@page import="java.util.List"%>
-<%@page import="com.ftc.gedoc.utiles.PeriodoRegistro"%>
 <%@page import="com.ftc.gedoc.bo.impl.PeriodoBOImpl"%>
 <%@page import="com.ftc.gedoc.bo.PeriodoBo"%>
 <%@page import="com.ftc.aq.Comunes"%>
@@ -54,7 +56,7 @@
             if (seguridad == null || session.isNew()) {
 
         %>
-        <script language="javascript" type="text/javascript">
+        <script>
             window.parent.location.replace("../default.jsp");
         </script>
         <%        } else {
@@ -194,7 +196,7 @@
             <input type="hidden" id="cmd" name="cmd" value="<%=cmd.toUpperCase() %>" />
             <input type="hidden" id="tipo_gasto" name="tipo_gasto" value="<%=tipoGasto %>" />
            </form>
-            <table cellspacing="1" cellpadding="5" style="width:790px;border: 1px #ccc solid;">
+            <table style="width:790px;border: 1px #ccc solid;">
                 <tr>
                     <th style="width: 90px;">Fecha</th>
                     <th style="width: 90px;">Importe</th>
@@ -220,7 +222,8 @@
                     <%
                     if(registro.getEvidencia()!=null && !registro.getEvidencia().isEmpty()){
                         Documento documento = new Documento();
-                        documento = documento.findById(registro.getEvidencia());
+                        DocumentoBO boDoc = new DocumentoBOImpl();
+                        documento = boDoc.findById(registro.getEvidencia());
                         String imagePdf = "<img src=\"../resources/images/pdf-icono.png\" height=\"26\" border=\"0\" />";
                         String imageXml = "<img src=\"../resources/images/xml-icono.png\" height=\"26\" border=\"0\" />";
                         String imageDef = "<img src=\"../resources/images/previa.png\" height=\"26\" border=\"0\" />";
@@ -246,7 +249,7 @@
                     }
                 %>                
             </table>
-            <table cellspacing="1" cellpadding="5" style="width:790px;border: 1px #ccc solid;">
+            <table style="width:790px;border: 1px #ccc solid;">
                 <tr>
                     <td colspan="6" style="text-align: right">
                         <%if(!esConsulta){ %>
