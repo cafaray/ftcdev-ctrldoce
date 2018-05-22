@@ -20,5 +20,9 @@ we use TSMIUtil.jar and TSMIMail.jar, both of them are old external dependencies
                          -Dpackaging=<jar> -DlocalRepositoryPath=</ftc/libs/>
 
 # Second challenge
-Change the statics methods used in many class that represent a model and also has functions. So, first we decouple the model and then transform the in DAO and BO objects. In this way we decouple the model an functionallity.
-  
+Change the statics methods used in many classes that represent everithing, the model, business functions, data access and view logic. First, we decouple the models and move these to model package, then starts the transformation to BO an DAO classes, designing the interfaces and implementing the methods, also supporting the Exception manager.
+
+# Third challende
+Remove every DAO access in the JSP, and use all the BO objects. Making a better implementation in Excepction handler. 
+
+ 
